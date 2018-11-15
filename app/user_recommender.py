@@ -9,7 +9,7 @@ recommender = None
 def set_recommender(user_similarity):
     """
     Set global recommender variable to similarity matrix of users.
-    :param corr: Cosine similarity matrix
+    :param user_similarity: Cosine similarity matrix
     """
     global recommender
     recommender = user_similarity

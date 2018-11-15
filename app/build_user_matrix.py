@@ -102,33 +102,31 @@ def transform_user_course_views(user_course_views):
     :param user_course_views: Pandas DataFrame on users' course views
     :return: Pandas DataFrame
     """
-    courses = get_course_data(user_course_views)
     views = get_view_data(user_course_views)
     num_courses = get_num_courses_data(user_course_views)
     levels = get_level_data(user_course_views)
     view_times = get_view_times_data(user_course_views)
-    authors = get_author_data(user_course_views)
 
-    all_data = pd.merge(courses, views, 'left', on='user_handle')
-    all_data = pd.merge(all_data, num_courses, 'left', on='user_handle')
+    all_data = pd.merge(views, num_courses, 'left', on='user_handle')
     all_data = pd.merge(all_data, levels, 'left', on='user_handle')
     all_data = pd.merge(all_data, view_times, 'left', on='user_handle')
-    all_data = pd.merge(all_data, authors, 'left', on='user_handle')
 
     return all_data
 
 
 def transform_user_assessment_scores(user_assessment_scores):
     """
-    Scale user assessment scores and pivot the data.
+    Get the mean assessment score per user and scale the values.
     :param user_assessment_scores: Pandas DataFrame with user assessment data
     :return: Pandas DataFrame
     """
-    user_assessment_scores['user_assessment_score'] = StandardScaler().fit_transform(
-        user_assessment_scores[['user_assessment_score']])
+    user_assessment_scores = user_assessment_scores.groupby('user_handle')[
+        'user_assessment_score'].mean().reset_index().rename(
+        columns={'user_assessment_score': 'avg_score'})
+    user_assessment_scores.set_index('user_handle', inplace=True)
+    user_assessment_scores['avg_score'] = StandardScaler().fit_transform(user_assessment_scores[['avg_score']])
 
-    return pd.pivot_table(user_assessment_scores, index='user_handle', columns='assessment_tag',
-                          values='user_assessment_score', fill_value=0.0)
+    return user_assessment_scores
 
 
 def get_user_data(conn):
