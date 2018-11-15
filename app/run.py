@@ -1,4 +1,5 @@
 import os
+import sqlite3
 
 import connexion
 from flask import render_template
@@ -12,6 +13,10 @@ app = connexion.App(__name__, specification_dir="./")
 
 app.add_api("swagger.yml")
 
+db_conn = sqlite3.connect('db/ps.sqlite')
+users = get_user_data(db_conn)
+build_recommender(users)
+
 
 @app.route("/")
 def home():
@@ -20,7 +25,6 @@ def home():
 
 if __name__ == '__main__':
     db_conn = create_db('db/ps.sqlite', file_paths=DATA_FILE_PATHS, table_desc=TABLE_DESC)
-
     users = get_user_data(db_conn)
     build_recommender(users)
 
