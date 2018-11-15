@@ -34,9 +34,6 @@ app.view = (function() {
     let $user_handle = $('#user_handle');
 
     return {
-        reset: function() {
-            $user_handle.val('').focus();
-        },
         build_table: function(user_recommender) {
             let rows = ''
 
@@ -88,13 +85,8 @@ app.controller = (function(m, v) {
         e.preventDefault();
     });
 
-    $('#reset').click(function() {
-        view.reset();
-    })
-
     $event_pump.on('model_get_similar_users_success', function(e, data) {
         view.build_table(data);
-        view.reset();
     });
 
     $event_pump.on('model_error', function(e, xhr, textStatus, errorThrown) {
