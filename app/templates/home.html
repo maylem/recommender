@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recommender System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="static/css/home.css">
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"
+            crossorigin="anonymous">
+    </script>
+</head>
+<body>
+<div class="container">
+    <h1 class="banner">Recommender System API Demo</h1>
+    <div class="section editor">
+        <label for="user_handle">User Handle<input id="user_handle" type="text"/>
+        </label>
+        <button id="get_similar_users">Similar Users</button>
+    </div>
+    <div class="user_recommender">
+        <table>
+            <caption>Similar Users</caption>
+            <thead>
+            <tr>
+                <th>User Handle</th>
+                <th>Similarity Score</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div class="error">
+    </div>
+</div>
+</body>
+<script src="static/js/home.js"></script>
+</html>

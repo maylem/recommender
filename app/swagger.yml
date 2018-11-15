@@ -1,0 +1,37 @@
+swagger: "2.0"
+info:
+  description: Server swagger file
+  version: "1.0.0"
+  title: Swagger REST Article
+consumes:
+- application/json
+produces:
+- application/json
+
+basePath: /api
+
+paths:
+  /user_recommender/{user_handle}:
+    get:
+      operationId: user_recommender.get_similar_users
+      tags:
+      - User Recommender
+      summary: User recommender system
+      description: Get a list of 10 most similar users given a user handle
+      parameters:
+      - name: user_handle
+        in: path
+        type: integer
+        description: Integer user handle
+        required: true
+      responses:
+        200:
+          description: Successfully retrieved list of 10 most similar users
+          schema:
+            type: array
+            items:
+              properties:
+                user_handle:
+                  type: integer
+                similarity:
+                  type: integer
